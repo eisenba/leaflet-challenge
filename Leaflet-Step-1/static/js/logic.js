@@ -49,7 +49,7 @@ d3.json(quakeData, function(data){
   markerColor = d3.scaleLinear()
   .domain([min_depth, avg_depth, max_depth])
   .range(["chartreuse", "gold", "red"])
-console.log(markerColor(80))
+
 // Add circle markers for each earthquake
 for (var i = 0; i < data.features.length; i++) {
   L.circle([data.features[i].geometry.coordinates[1],data.features[i].geometry.coordinates[0]], {
@@ -63,9 +63,6 @@ for (var i = 0; i < data.features.length; i++) {
 for (var i = 0; i < colorArr.length; i++){
   colorRange.push(markerColor(colorArr[i]))
 }
-console.log(max_depth)
-console.log(min_depth)
-console.log(avg_depth)
   // Set up the legend
   var legend = L.control({ position: "bottomright" });
   legend.onAdd = function() {
