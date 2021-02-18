@@ -51,6 +51,20 @@ d3.json(quakeData, function(data){
 console.log(max_depth)
 console.log(min_depth)
 console.log(avg_depth)
+
+// Add circle markers for each earthquake
+for (var i = 0; i < data.features.length; i++) {
+  L.circle([data.features[i].geometry.coordinates[1],data.features[i].geometry.coordinates[0]], {
+    fillOpacity: 0.75,
+    color: "white",
+    fillColor: markerColor(data.features[i].geometry.coordinates[2]),
+    // Setting our circle's radius equal to the output of our markerSize function
+    // This will make our marker's size proportionate to its population
+    radius: markerSize(data.features[i].properties.mag)
+  }).bindPopup("<h1>" + data.features[i].properties.place + "</h1> <hr> <h3>Magnitude: " + data.features[i].properties.mag + "</h3>").addTo(myMap);
+}
+
+
 });
  
 
