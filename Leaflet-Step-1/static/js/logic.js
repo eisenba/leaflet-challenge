@@ -21,6 +21,8 @@ var min_depth = 0
 var depthCount = 0
 var depthSum = 0
 var avg_depth = 0
+var colorArr = [-2.13,53.9,150, 250, 350, 450, 550, 662.1]
+var colorRange = []
 // Start d3
 d3.json(quakeData, function(data){
   // find min and max depth
@@ -47,7 +49,7 @@ d3.json(quakeData, function(data){
   markerColor = d3.scaleLinear()
   .domain([min_depth, avg_depth, max_depth])
   .range(["chartreuse", "gold", "red"])
-
+console.log(markerColor(80))
 // Add circle markers for each earthquake
 for (var i = 0; i < data.features.length; i++) {
   L.circle([data.features[i].geometry.coordinates[1],data.features[i].geometry.coordinates[0]], {
@@ -58,6 +60,42 @@ for (var i = 0; i < data.features.length; i++) {
     radius: markerSize(data.features[i].properties.mag)
   }).bindPopup("<h2>" + data.features[i].properties.place + "</h2> <hr> <h3>Magnitude: " + data.features[i].properties.mag + "</h3> <h3>Depth: " + data.features[i].geometry.coordinates[2] + " km</h3>").addTo(myMap);
 }
+for (var i = 0; i < colorArr.length; i++){
+  colorRange.push(markerColor(colorArr[i]))
+}
+console.log(max_depth)
+console.log(min_depth)
+console.log(avg_depth)
+  // Set up the legend
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend"),
+    limits = colorArr;
+    var colors = colorRange;
+    var labels = [];
+
+   // Add min & max
+   var legendInfo = "<h1>Depth</h1>" +
+   "<div class=\"labels\">" +
+     "<div class=\"min\">" + limits[0] + "</div>" +
+     "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+   "</div>";
+
+
+    div.innerHTML = legendInfo;
+
+
+    limits.forEach(function(limit, index) {
+      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    });
+
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    return div;
+  };
+
+  // Adding legend to the map
+  legend.addTo(myMap);
 
 
 });
