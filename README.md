@@ -1,1 +1,2 @@
-# leaflet-challenge
+# Earthquake Map - Leaflet Challenge
+
