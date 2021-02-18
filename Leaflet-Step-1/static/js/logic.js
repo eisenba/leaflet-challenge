@@ -10,7 +10,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/streets-v11",
+  id: "mapbox/light-v10",
   accessToken: MapKey
 }).addTo(myMap);
 
@@ -40,17 +40,13 @@ d3.json(quakeData, function(data){
   avg_depth = depthSum/depthCount
   // Define marker size function
   function markerSize(magnitude) {
-    return magnitude*100000
+    return (magnitude**3)*1000
   }
 
   // Define marker color function
   markerColor = d3.scaleLinear()
   .domain([min_depth, avg_depth, max_depth])
   .range(["chartreuse", "gold", "red"])
-  
-console.log(max_depth)
-console.log(min_depth)
-console.log(avg_depth)
 
 // Add circle markers for each earthquake
 for (var i = 0; i < data.features.length; i++) {
