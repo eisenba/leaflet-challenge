@@ -14,36 +14,32 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: MapKey
 }).addTo(myMap);
 
-// Create the createMap function
+// Declare variables
+var quakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson"
+var max_depth = 0
+var min_depth = 0
+// Start d3
+d3.json(quakeData, function(data){
+  // find min and max depth
+  for (let i= 0; i< data.features.length; i++) {
+    if (data.features[i].geometry.coordinates[2] > max_depth){
+      max_depth = data.features[i].geometry.coordinates[2]
+    } else if (data.features[i].geometry.coordinates[2] < min_depth){
+      min_depth = data.features[i].geometry.coordinates[2]
+    }
+  }
+  // Define marker size function
+  function markerSize(magnitude) {
+    return magnitude*5
+  }
+
+  // Define marker color function
+  function markerColor(depth) {
+    
+  }
+console.log(max_depth)
+console.log(min_depth)
+});
+ 
 
 
-  // Create the tile layer that will be the background of our map
-
-
-  // Create a baseMaps object to hold the lightmap layer
-
-
-  // Create an overlayMaps object to hold the bikeStations layer
-
-
-  // Create the map object with options
-
-
-  // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
-
-// Create the createMarkers function
-
-  // Pull the "stations" property off of response.data
-
-  // Initialize an array to hold bike markers
-
-  // Loop through the stations array
-    // For each station, create a marker and bind a popup with the station's name
-
-    // Add the marker to the bikeMarkers array
-
-  // Create a layer group made from the bike markers array, pass it into the createMap function
-
-
-// Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
-//d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson", createMarkers);
