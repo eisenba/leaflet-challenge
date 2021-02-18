@@ -1,5 +1,18 @@
-// var newYorkCoords = [40.73, -74.0059];
-// var mapZoomLevel = 12;
+// Creating map object
+var myMap = L.map("map", {
+  center: [0, 0],
+  zoom: 2
+   
+});
+
+L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+  tileSize: 512,
+  maxZoom: 18,
+  zoomOffset: -1,
+  id: "mapbox/streets-v11",
+  accessToken: MapKey
+}).addTo(myMap);
 
 // Create the createMap function
 
@@ -33,3 +46,4 @@
 
 
 // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
+//d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson", createMarkers);
